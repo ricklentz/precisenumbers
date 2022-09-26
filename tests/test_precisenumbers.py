@@ -135,9 +135,12 @@ def test_PreciseNumber_equality():
         180.21
     )
 
-    # Lower precision -> True
+    # Different precision -> True
     assert precisenumbers.PreciseNumber(180.2) == precisenumbers.PreciseNumber(
         180.21
+    )
+    assert precisenumbers.PreciseNumber(180.21) == precisenumbers.PreciseNumber(
+        180.2
     )
 
     # Different numbers -> False
