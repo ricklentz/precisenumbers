@@ -18,7 +18,7 @@ a "multiplier", an "integer", a "fractional", and a "precision." The number can 
 M * (I + F / 10^P), where M, I, F, and P correspond to the "multiplier"m "integer", "fractional" and
 "precision" values, respectively.
 
-While PreciseNumbers uses integers as it's "under-the-hood" representation of numeric values, it
+While PreciseNumbers uses integers as its "under-the-hood" representation of numeric values, it
 facilitates easy access to alternative -- e.g., float and string -- representations.
 
 
