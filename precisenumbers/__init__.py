@@ -4,28 +4,28 @@ from typing import Optional, Tuple, Union
 logger = logging.getLogger(__name__)
 
 
-def get_multiplier(value: Union[int, str]) -> int:
-    """Get the multiplier (1 or -1) for a given value. The multiplier will be 1,
-    if the value is positive and -1, if the value is negative."""
-    if isinstance(value, int):
-        return -1 if value < 0 else 1
+def is_negative(value: Union[int, str]) -> bool:
+    """Determine whether a value is negative."""
+    if isinstance(value, int) and value < 0:
+        return True
 
-    if isinstance(value, str):
-        return -1 if value[0] == '-' else 1
+    if isinstance(value, str) and value[0] == '-':
+        return True
 
-    raise ValueError('value must be int or str')
+    return False
 
 
 def parse_number(number: Union[float, int, str]) -> Tuple[int, int, int, int]:
-    """Segment a number into the multiplier, integer, fractional, and precision
+    """Segment a number into the boolean negative indicator (which will be used to create
+    the multiplier), integer, fractional, and precision
 
     Args:
         number: the number to be parsed
             e.g., '-85.1420'
 
     Returns:
-        int: the multiplier (either 1 or -1) portion of the number
-            e.g., -1
+        bool: whether or not the number is negative
+            e.g., True
         int: the integer portion of the number
             e.g., 85
         int: the fractional portion of the number
@@ -37,20 +37,20 @@ def parse_number(number: Union[float, int, str]) -> Tuple[int, int, int, int]:
         raise NotImplementedError('number must be float, int, or str')
 
     if isinstance(number, int):
-        return get_multiplier(number), abs(number), 0, 0
+        return is_negative(number), abs(number), 0, 0
 
     number = str(number)
 
     if '.' in number:
         integer_str, fractional_str = number.split('.')
         return (
-            get_multiplier(integer_str),
+            is_negative(integer_str),
             abs(int(integer_str)),
             int(fractional_str),
             len(fractional_str),
         )
 
-    return get_multiplier(number), int(number), 0, 0
+    return is_negative(number), int(number), 0, 0
 
 
 class PreciseNumber:
@@ -67,7 +67,7 @@ class PreciseNumber:
 
         # Parse input number
         (
-            self.multiplier,
+            self.negative,
             self.integer,
             inferred_fractional,
             inferred_precision,
@@ -103,6 +103,11 @@ class PreciseNumber:
             raise ValueError(
                 f'number outside of valid range of ({self.MINIMUM}, {self.MAXIMUM})'
             )
+
+    @property
+    def multiplier(self) -> int:
+        """Converts the is_negative property to the relevant multiplier"""
+        return -1 if self.negative else 1
 
     @staticmethod
     def _change_power_of_ten(
