@@ -1,18 +1,8 @@
 import logging
+import math
 from typing import Optional, Tuple, Union
 
 logger = logging.getLogger(__name__)
-
-
-def is_negative(value: Union[int, str]) -> bool:
-    """Determine whether a value is negative."""
-    if isinstance(value, int) and value < 0:
-        return True
-
-    if isinstance(value, str) and value[0] == '-':
-        return True
-
-    return False
 
 
 def parse_number(number: Union[float, int, str]) -> Tuple[int, int, int, int]:
@@ -36,21 +26,23 @@ def parse_number(number: Union[float, int, str]) -> Tuple[int, int, int, int]:
     if not isinstance(number, (float, int, str)):
         raise NotImplementedError('number must be float, int, or str')
 
+    negative = math.copysign(1, float(number)) < 0
+
     if isinstance(number, int):
-        return is_negative(number), abs(number), 0, 0
+        return negative, abs(number), 0, 0
 
     number = str(number)
 
     if '.' in number:
         integer_str, fractional_str = number.split('.')
         return (
-            is_negative(integer_str),
+            negative,
             abs(int(integer_str)),
             int(fractional_str),
             len(fractional_str),
         )
 
-    return is_negative(number), int(number), 0, 0
+    return negative, int(number), 0, 0
 
 
 class PreciseNumber:
