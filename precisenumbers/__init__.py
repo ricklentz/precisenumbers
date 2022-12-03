@@ -49,6 +49,7 @@ class PreciseNumber:
     """Representation of a number that has a value and a precision, i.e., the number of valid
     digits after the decimal."""
 
+    PRECISION_WARNING: bool = True
     MAXIMUM_PRECISION: Optional[int] = None
     MAXIMUM: Optional[Union[float, int]] = None
     MINIMUM: Optional[Union[float, int]] = None
@@ -85,9 +86,10 @@ class PreciseNumber:
             self.MAXIMUM_PRECISION is not None
             and self.precision > self.MAXIMUM_PRECISION
         ):
-            raise ValueError(
-                f'precision exceeds maximum allowable value; precision must be <= {self.MAXIMUM_PRECISION}'
+            logger.warning(
+                f'precision exceeds maximum allowable value, which may indicate errors in data; this warning will not repeat'
             )
+            self.PRECISION_WARNING = False
 
         if (self.MINIMUM is not None and float(self) < self.MINIMUM) or (
             self.MAXIMUM is not None and float(self) > self.MAXIMUM
