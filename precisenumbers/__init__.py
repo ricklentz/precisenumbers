@@ -86,10 +86,12 @@ class PreciseNumber:
             self.MAXIMUM_PRECISION is not None
             and self.precision > self.MAXIMUM_PRECISION
         ):
-            logger.warning(
-                f'precision exceeds maximum allowable value, which may indicate errors in data; this warning will not repeat'
-            )
-            self.PRECISION_WARNING = False
+            if self.PRECISION_WARNING:
+                logger.warning(
+                    'precision exceeds maximum allowable value, which may indicate errors in data; '
+                    'this warning will not repeat'
+                )
+                self.set_precision_warning_false()
 
         if (self.MINIMUM is not None and float(self) < self.MINIMUM) or (
             self.MAXIMUM is not None and float(self) > self.MAXIMUM
@@ -97,6 +99,10 @@ class PreciseNumber:
             raise ValueError(
                 f'number outside of valid range of ({self.MINIMUM}, {self.MAXIMUM})'
             )
+
+    @classmethod
+    def set_precision_warning_false(cls):
+        cls.PRECISION_WARNING = False
 
     @property
     def multiplier(self) -> int:
