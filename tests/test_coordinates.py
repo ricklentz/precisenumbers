@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 from precisenumbers import coordinates as precisecoordinates
@@ -17,8 +19,16 @@ def test_Longitude_init():
     with pytest.raises(ValueError):
         precisecoordinates.Longitude(-180.3)
 
-    with pytest.raises(ValueError):
-        precisecoordinates.Longitude(-10.3, precision=8)
+
+def test_Longitude_warning(caplog):
+    precisecoordinates.Longitude(-10.3, precision=8)
+    assert 'WARNING' in caplog.text
+    assert 'precision exceeds maximum allowable value' in caplog.text
+
+    # Make sure it only warns once
+    precisecoordinates.Longitude(-10.3, precision=8)
+    assert len(re.findall('precision exceeds maximum allowable value', caplog.text)) == 1
+
 
 def test_Latitude_init():
     # Success case
@@ -34,8 +44,14 @@ def test_Latitude_init():
     with pytest.raises(ValueError):
         precisecoordinates.Latitude(-90.3)
 
-    with pytest.raises(ValueError):
-        precisecoordinates.Latitude(-10.3, precision=8)
+
+def test_Latitude_warning(caplog):
+    precisecoordinates.Latitude(-10.3, precision=8)
+    assert 'precision exceeds maximum allowable value' in caplog.text
+
+    # Make sure it only warns once
+    precisecoordinates.Longitude(-10.3, precision=8)
+    assert len(re.findall('precision exceeds maximum allowable value', caplog.text)) == 1
 
 
 def test_Coordinate_init():
