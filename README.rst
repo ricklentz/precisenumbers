@@ -51,4 +51,6 @@ Requirements
 Installation
 =====
 
-Watch this space! More to come.
+The easiest way to install precisenumbers is using `pip`::
+
+    pip install precisenumbers
