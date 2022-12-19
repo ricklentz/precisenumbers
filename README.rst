@@ -15,7 +15,7 @@ of precision (i.e., a specific number of relevant values after the decimal). Pre
 effort to solve that problem by representing the different components of the value -- including
 its precision -- as integers. PreciseNumbers stores every numeric value as 4 distinct numbers,
 a "multiplier", an "integer", a "fractional", and a "precision." The number can then be represented as
-M * (I + F / 10^P), where M, I, F, and P correspond to the "multiplier", "integer", "fractional" and
+M * (I + F / 10^P), where M, I, F, and P correspond to the "multiplier", "integer", "fractional", and
 "precision" values, respectively.
 
 While PreciseNumbers uses integers as its "under-the-hood" representation of numeric values, it
