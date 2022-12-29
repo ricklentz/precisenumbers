@@ -56,7 +56,9 @@ class Coordinate:
         )
 
     def to_float(self) -> Tuple[float, float]:
+        """Converts the coordinate to a 2-tuple of floats (longitude, latitude)"""
         return float(self.longitude), float(self.latitude)
 
     def to_str(self) -> Tuple[str, str]:
+        """Converts the coordinate to a 2-tuple of strings (longitude, latitude)"""
         return str(self.longitude), str(self.latitude)
