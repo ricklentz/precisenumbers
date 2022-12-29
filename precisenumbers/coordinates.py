@@ -54,3 +54,9 @@ class Coordinate:
                 self.latitude.precision
             )
         )
+
+    def to_float(self):
+        return float(self.longitude), float(self.latitude)
+
+    def to_str(self):
+        return str(self.longitude), str(self.latitude)

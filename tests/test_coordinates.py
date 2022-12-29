@@ -108,3 +108,13 @@ def test_coordinate_hash():
 
     cp2 = precisecoordinates.Coordinate('10.123', '-0.1')
     assert hash(cp1) != hash(cp2)
+
+
+def test_coordinate_to_float():
+    cp1 = precisecoordinates.Coordinate('10.12345', '-0.1', precision=5)
+    assert cp1.to_float() == (10.12345, -0.1)
+
+
+def test_coordinate_to_str():
+    cp1 = precisecoordinates.Coordinate(10.12345, -0.1, precision=5)
+    assert cp1.to_str() == ('10.12345', '-0.10000')
