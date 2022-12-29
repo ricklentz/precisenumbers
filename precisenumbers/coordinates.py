@@ -44,3 +44,13 @@ class Coordinate:
 
         self.longitude = Longitude(number=longitude, precision=precision)
         self.latitude = Latitude(number=latitude, precision=precision)
+
+    def __hash__(self):
+        return hash(
+            (
+                str(self.longitude),
+                self.longitude.precision,
+                str(self.latitude),
+                self.latitude.precision
+            )
+        )
