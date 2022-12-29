@@ -55,8 +55,8 @@ class Coordinate:
             )
         )
 
-    def to_float(self):
+    def to_float(self) -> Tuple[float, float]:
         return float(self.longitude), float(self.latitude)
 
-    def to_str(self):
+    def to_str(self) -> Tuple[str, str]:
         return str(self.longitude), str(self.latitude)
