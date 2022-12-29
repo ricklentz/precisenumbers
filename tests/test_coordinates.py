@@ -96,3 +96,15 @@ def test_Coordinate_init():
 
     with pytest.raises(ValueError):
         precisecoordinates.Coordinate(-10.3, 10.3, same_precision=False, precision=8)
+
+
+def test_coordinate_hash():
+    cp1 = precisecoordinates.Coordinate('10.12345', '-0.1', precision=5)
+    cp2 = precisecoordinates.Coordinate('10.12345', '-0.1', precision=5)
+    assert hash(cp1) == hash(cp2)
+
+    cp2 = precisecoordinates.Coordinate('10.12345', '-0.1', same_precision=False)
+    assert hash(cp1) != hash(cp2)
+
+    cp2 = precisecoordinates.Coordinate('10.123', '-0.1')
+    assert hash(cp1) != hash(cp2)
