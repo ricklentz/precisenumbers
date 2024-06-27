@@ -1,7 +1,7 @@
 # full credit to: https://github.com/jessica-writes-code, https://github.com/sbromberger
 from setuptools import setup, find_packages
 
-VERSION = '1.0.1' 
+VERSION = '0.0.5' 
 DESCRIPTION = 'For when you want your numbers to be precise'
 
 setup(
